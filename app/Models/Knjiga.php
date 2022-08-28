@@ -11,6 +11,17 @@ class Knjiga extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'naziv',
+        'zanr',
+        'pismo',
+        'povez',
+        'broj_strana',
+        'cena',
+        'pisac_id',
+        'izdavac_id'
+    ];
+
     public function izdavac()
     {
         return $this->belongsTo(Izdavac::class);

@@ -10,6 +10,13 @@ class Pisac extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'ime',
+        'prezime',
+        'drzava',
+        'broj_knjiga',
+    ];
+
     public function knjige()
     {
         return $this->hasMany(Knjiga::class);

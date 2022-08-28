@@ -13,6 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $IS = new IzdavacSeeder();
+        $PS = new PisacSeeder();
+        $KS = new KnjigaSeeder();
+
+        $IS->run();
+        $PS->run();
+        $KS->run();
     }
 }

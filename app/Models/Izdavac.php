@@ -10,6 +10,13 @@ class Izdavac extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'firma',
+        'adresa',
+        'grad',
+        'sajt',
+    ];
+
     public function knjige()
     {
         return $this->hasMany(Knjiga::class);
