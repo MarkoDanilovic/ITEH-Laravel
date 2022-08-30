@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\IzdResource;
 use App\Models\Izdavac;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class IzdController extends Controller
 {
@@ -14,7 +16,8 @@ class IzdController extends Controller
      */
     public function index()
     {
-        //
+        $izd = Izdavac::all();
+        return IzdResource::collection($izd);
     }
 
     /**
@@ -46,7 +49,7 @@ class IzdController extends Controller
      */
     public function show(Izdavac $izdavac)
     {
-        //
+        return new IzdResource($izdavac);
     }
 
     /**
@@ -67,9 +70,28 @@ class IzdController extends Controller
      * @param  \App\Models\Izdavac  $izdavac
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, Izdavac $izdavac)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'firma' => 'required|string',
+            'adresa' => 'required|string',
+            'grad' => 'required|string',
+            'sajt' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $izdavac->firma = $request->firma;
+        $izdavac->adresa = $request->adresa;
+        $izdavac->grad = $request->grad;
+        $izdavac->sajt = $request->sajt;
+
+        $izdavac->save();
+
+        return response()->json('Izdavac izmenjen');
     }
 
     /**

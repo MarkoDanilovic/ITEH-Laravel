@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PisResource;
 use App\Models\Pisac;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class PisController extends Controller
      */
     public function index()
     {
-        //
+        $pis = Pisac::all();
+
+        return PisResource::collection($pis);
     }
 
     /**
@@ -46,7 +49,7 @@ class PisController extends Controller
      */
     public function show(Pisac $pisac)
     {
-        //
+        return new PisResource($pisac);
     }
 
     /**
@@ -80,6 +83,7 @@ class PisController extends Controller
      */
     public function destroy(Pisac $pisac)
     {
-        //
+        $pisac->delete();
+        return response()->json('Pisac je obrisan');
     }
 }
