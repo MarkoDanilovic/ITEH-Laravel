@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AFKontroler;
 use App\Http\Controllers\IzdController;
 use App\Http\Controllers\PisController;
 use Illuminate\Http\Request;
@@ -17,14 +18,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('izdavac', [IzdController::class, 'index']);
-Route::get('izdavac/{izdavac}', [IzdController::class, 'show']);
-Route::put('izdavac/{izdavac}', [IzdController::class, 'update']);
-
 Route::get('pisac', [PisController::class, 'index']);
-Route::get('pisac/{pisac}', [PisController::class, 'show']);
-Route::delete('pisac/{pisac}', [PisController::class, 'destroy']);
 
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('izdavac/{izdavac}', [IzdController::class, 'show']);
+    Route::put('izdavac/{izdavac}', [IzdController::class, 'update']);
+    Route::get('pisac/{pisac}', [PisController::class, 'show']);
+    Route::delete('pisac/{pisac}', [PisController::class, 'destroy']);
+    Route::post('logout', [AFKontroler::class, 'logout']);
 });
+
+Route::post('register', [AFKontroler::class, 'register']);
+Route::post('login', [AFKontroler::class, 'login']);
